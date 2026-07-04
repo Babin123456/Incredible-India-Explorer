@@ -221,6 +221,18 @@ button {
     box-shadow: 0 6px 20px rgba(255, 176, 31, 0.4);
 }
 
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 /* Glassmorphism Cards Base */
 .glass-card {
     background: var(--bg-dark-card);
@@ -642,21 +654,108 @@ button {
     width: 100%;
 }
 
-/* Floating Tooltip */
+/* Floating Rich Tooltip Card */
 .map-tooltip {
     position: fixed;
     pointer-events: none;
-    padding: 8px 16px;
-    background: rgba(9, 13, 22, 0.95);
-    border: 1.5px solid var(--primary-gold);
+    width: 300px;
+    padding: 0;
+    background: rgba(9, 13, 22, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1.5px solid rgba(212, 175, 55, 0.4);
     color: var(--text-light);
-    border-radius: var(--border-radius-sm);
-    font-weight: 600;
-    font-size: 0.9rem;
-    box-shadow: var(--shadow-soft);
+    border-radius: 14px;
+    font-size: 0.88rem;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.08);
     opacity: 0;
-    transition: opacity 0.1s ease-out;
+    transition: opacity 0.18s ease-out, transform 0.18s ease-out;
+    transform: translateY(6px);
     z-index: 1000;
+    overflow: hidden;
+}
+
+.map-tooltip[style*="opacity: 1"] {
+    transform: translateY(0);
+}
+
+.tooltip-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px 10px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(255, 153, 51, 0.1));
+}
+
+.tooltip-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.tooltip-state-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+    background: linear-gradient(135deg, #d4af37, #ff9933);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.tooltip-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.35), transparent);
+}
+
+.tooltip-details {
+    padding: 10px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.tooltip-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.tooltip-label {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.5);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.tooltip-value {
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-align: right;
+    color: rgba(255, 255, 255, 0.92);
+    line-height: 1.3;
+}
+
+.tooltip-footer {
+    padding: 8px 16px;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 1.45;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.tooltip-cta {
+    padding: 7px 16px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--primary-gold);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.7;
 }
 
 /* ==========================================================================
@@ -1527,6 +1626,23 @@ button {
         min-width: calc((100% - 30px) / 2);
         max-width: calc((100% - 30px) / 2);
     }
+
+    .science-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .science-isro-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .science-modal-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .science-modal-hero {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
 }
 
 @media (max-width: 1024px) {
@@ -1634,6 +1750,125 @@ button {
         grid-template-columns: 1fr;
     }
 
+    .sports-filters-bar {
+        align-items: stretch;
+    }
+
+    .sports-filters-bar .search-box-wrapper {
+        width: 100%;
+    }
+
+    .sports-athlete-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .athlete-media {
+        width: 84px;
+    }
+
+    .sports-modal-avatar {
+        width: 104px;
+        height: 104px;
+    }
+
+    .sports-timeline {
+        grid-template-columns: 1fr;
+    }
+
+    .sports-modal-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sports-modal-hero,
+    .sports-modal-body {
+        padding: 28px 20px;
+    }
+
+    .sports-modal-hero {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .sports-modal-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .science-hero {
+        min-height: 420px;
+        padding: 100px 0 70px;
+    }
+
+    .science-hero h1 {
+        font-size: 2.8rem;
+        max-width: 12ch;
+    }
+
+    .science-hero-actions {
+        flex-direction: column;
+        width: min(100%, 320px);
+    }
+
+    .science-hero-actions .btn {
+        width: 100%;
+    }
+
+    .science-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .science-isro-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .science-scientist-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .science-scientist-card-head,
+    .science-isro-card-top {
+        flex-direction: column;
+    }
+
+    .science-scientist-avatar {
+        width: 82px;
+        height: 82px;
+    }
+
+    .science-mission-avatar {
+        width: 68px;
+        height: 68px;
+    }
+
+    .science-timeline {
+        grid-template-columns: 1fr;
+    }
+
+    .science-modal-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .science-modal-hero,
+    .science-modal-body {
+        padding: 28px 20px;
+    }
+
+    .science-modal-hero {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .science-modal-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .science-filters-bar {
+        align-items: stretch;
+    }
+
+    .science-filters-bar .search-box-wrapper {
+        width: 100%;
+    }
+
     .footer-container {
         grid-template-columns: 1fr;
         gap: 30px;
@@ -1709,6 +1944,1270 @@ button {
     font-size: 1.15rem;
     color: var(--text-muted);
     line-height: 1.6;
+}
+
+/* ========================================================================== 
+   SPORTS PAGE STYLES
+   ========================================================================== */
+.sports-page-body {
+    background:
+        radial-gradient(circle at top, rgba(255, 176, 31, 0.08) 0%, transparent 35%),
+        radial-gradient(circle at 80% 20%, rgba(18, 136, 7, 0.08) 0%, transparent 28%),
+        var(--bg-dark-deep);
+}
+
+.sports-hero {
+    background:
+        linear-gradient(135deg, rgba(9, 13, 22, 0.35) 0%, rgba(9, 13, 22, 0.7) 55%, rgba(9, 13, 22, 0.92) 100%),
+        radial-gradient(circle at 20% 30%, rgba(255, 153, 51, 0.28) 0%, transparent 30%),
+        radial-gradient(circle at 78% 38%, rgba(18, 136, 7, 0.2) 0%, transparent 26%),
+        linear-gradient(160deg, #111b2d 0%, #09111d 50%, #07130f 100%);
+    position: relative;
+}
+
+.sports-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.35;
+    z-index: 0;
+}
+
+.sports-hero .sub-hero-overlay {
+    background: linear-gradient(180deg, rgba(7, 13, 23, 0.25) 0%, rgba(7, 13, 23, 0.92) 100%);
+}
+
+.sports-hero .sub-hero-content {
+    max-width: 920px;
+}
+
+.sports-hero-pills {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+}
+
+.sports-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+.sports-pill.cricket {
+    color: var(--primary-saffron);
+    border-color: rgba(255, 153, 51, 0.3);
+}
+
+.sports-pill.olympics {
+    color: var(--primary-gold);
+    border-color: rgba(255, 176, 31, 0.3);
+}
+
+.sports-pill.indigenous {
+    color: var(--primary-green);
+    border-color: rgba(18, 136, 7, 0.3);
+}
+
+.sports-catalog-section {
+    background: linear-gradient(to bottom, rgba(7, 13, 23, 0.95) 0%, rgba(9, 13, 22, 1) 100%);
+}
+
+.sports-filters-bar {
+    align-items: flex-end;
+}
+
+.sports-filters-bar .tab-container {
+    margin-bottom: 0;
+}
+
+.sports-athlete-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.athlete-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 24px;
+    min-height: 100%;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    overflow: hidden;
+}
+
+.athlete-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 5px;
+    background: var(--sports-accent, var(--primary-gold));
+}
+
+.athlete-card[data-category="cricket"] {
+    --sports-accent: var(--primary-saffron);
+    --sports-accent-soft: rgba(255, 153, 51, 0.15);
+}
+
+.athlete-card[data-category="olympics"] {
+    --sports-accent: var(--primary-gold);
+    --sports-accent-soft: rgba(255, 176, 31, 0.15);
+}
+
+.athlete-card[data-category="indigenous"] {
+    --sports-accent: var(--primary-green);
+    --sports-accent-soft: rgba(18, 136, 7, 0.15);
+}
+
+.athlete-card:hover,
+.athlete-card:focus-visible {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-glow-active);
+    border-color: rgba(255, 176, 31, 0.28);
+}
+
+.athlete-card:focus-visible {
+    outline: 2px solid rgba(255, 176, 31, 0.45);
+    outline-offset: 3px;
+}
+
+.athlete-card-header {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.athlete-media {
+    width: 92px;
+    aspect-ratio: 1 / 1;
+    border-radius: 22px;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 8px 24px rgba(0, 0, 0, 0.18);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.athlete-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+}
+
+.athlete-media.cricket {
+    box-shadow: 0 0 0 1px rgba(255, 153, 51, 0.18), 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.athlete-media.olympics {
+    box-shadow: 0 0 0 1px rgba(255, 176, 31, 0.18), 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.athlete-media.indigenous {
+    box-shadow: 0 0 0 1px rgba(18, 136, 7, 0.18), 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.sports-modal-avatar {
+    width: 118px;
+    height: 118px;
+    border-radius: 30px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.sports-modal-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+}
+
+.athlete-card-title h3 {
+    font-size: 1.45rem;
+    margin: 10px 0 6px;
+}
+
+.athlete-card-title p {
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.athlete-summary {
+    color: var(--text-muted);
+    font-size: 0.98rem;
+}
+
+.achievement-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.achievement-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-light);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.athlete-card-footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.card-sport-note {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.athlete-view-btn {
+    padding: 10px 18px;
+    font-size: 0.92rem;
+}
+
+.sports-empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 34px 24px;
+}
+
+.sports-empty-state h3 {
+    font-size: 1.7rem;
+    margin-bottom: 10px;
+}
+
+.sports-empty-state p {
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.sports-timeline-section {
+    background: linear-gradient(to bottom, rgba(9, 13, 22, 1) 0%, rgba(7, 13, 23, 0.96) 100%);
+}
+
+.sports-timeline-detail {
+    margin-bottom: 28px;
+    padding: 24px 28px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.timeline-detail-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.timeline-detail-year {
+    color: var(--primary-gold);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.sports-timeline-detail h3 {
+    font-size: 1.75rem;
+    margin-bottom: 10px;
+}
+
+.sports-timeline-detail p {
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+.sports-timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 22px;
+}
+
+.sports-timeline-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    text-align: left;
+    width: 100%;
+}
+
+.sports-timeline-item.cricket {
+    --sports-accent: var(--primary-saffron);
+}
+
+.sports-timeline-item.olympics {
+    --sports-accent: var(--primary-gold);
+}
+
+.sports-timeline-item.indigenous {
+    --sports-accent: var(--primary-green);
+}
+
+.sports-timeline-item.all {
+    --sports-accent: var(--text-muted);
+}
+
+.sports-timeline-item::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 4px;
+    background: var(--sports-accent);
+    opacity: 0.9;
+}
+
+.sports-timeline-item:hover,
+.sports-timeline-item:focus-visible,
+.sports-timeline-item.active {
+    transform: translateY(-6px);
+    border-color: rgba(255, 176, 31, 0.32);
+    box-shadow: var(--shadow-glow);
+}
+
+.sports-timeline-item:focus-visible {
+    outline: 2px solid rgba(255, 176, 31, 0.45);
+    outline-offset: 3px;
+}
+
+.sports-timeline-item h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0;
+}
+
+.sports-timeline-item p {
+    color: var(--text-muted);
+    font-size: 0.94rem;
+}
+
+.timeline-year {
+    color: var(--primary-gold);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.sports-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+}
+
+.sports-badge.all {
+    color: var(--text-light);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.sports-badge.cricket {
+    color: var(--primary-saffron);
+    background: rgba(255, 153, 51, 0.12);
+    border-color: rgba(255, 153, 51, 0.22);
+}
+
+.sports-badge.olympics {
+    color: var(--primary-gold);
+    background: rgba(255, 176, 31, 0.12);
+    border-color: rgba(255, 176, 31, 0.22);
+}
+
+.sports-badge.indigenous {
+    color: var(--primary-green);
+    background: rgba(18, 136, 7, 0.12);
+    border-color: rgba(18, 136, 7, 0.22);
+}
+
+.sports-modal .modal-card {
+    max-width: 860px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.sports-modal-layout {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    min-height: 100%;
+}
+
+.sports-modal-hero {
+    padding: 42px 34px;
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.1) 0%, transparent 28%),
+        linear-gradient(160deg, rgba(17, 27, 45, 1) 0%, rgba(7, 17, 29, 1) 55%, rgba(6, 20, 15, 1) 100%);
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+}
+
+.sports-modal-avatar.cricket,
+.athlete-media.cricket {
+    background: linear-gradient(135deg, rgba(255, 153, 51, 0.12), rgba(255, 176, 31, 0.1));
+}
+
+.sports-modal-avatar.olympics,
+.athlete-media.olympics {
+    background: linear-gradient(135deg, rgba(255, 176, 31, 0.12), rgba(255, 255, 255, 0.06));
+}
+
+.sports-modal-avatar.indigenous,
+.athlete-media.indigenous {
+    background: linear-gradient(135deg, rgba(18, 136, 7, 0.12), rgba(63, 191, 73, 0.08));
+}
+
+.sports-modal-hero h3 {
+    font-size: 2.1rem;
+    margin: 6px 0 0;
+}
+
+.sports-modal-hero p {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.sports-modal-body {
+    padding: 42px 34px;
+}
+
+.sports-highlight-list {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--text-muted);
+    display: grid;
+    gap: 10px;
+}
+
+.sports-modal-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.modal-stat {
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.modal-stat-label {
+    display: block;
+    color: var(--primary-gold);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.modal-stat-value {
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+/* ========================================================================== 
+   SCIENCE PAGE STYLES
+   ========================================================================== */
+.science-page-body {
+    background:
+        radial-gradient(circle at top left, rgba(255, 176, 31, 0.08) 0%, transparent 28%),
+        radial-gradient(circle at 82% 16%, rgba(18, 136, 7, 0.08) 0%, transparent 24%),
+        radial-gradient(circle at 50% 110%, rgba(255, 153, 51, 0.06) 0%, transparent 34%),
+        var(--bg-dark-deep);
+}
+
+.science-hero {
+    position: relative;
+    min-height: 430px;
+    height: auto;
+    padding: 100px 0 60px;
+    background:
+        radial-gradient(circle at 20% 24%, rgba(255, 176, 31, 0.24) 0%, transparent 22%),
+        radial-gradient(circle at 80% 30%, rgba(18, 136, 7, 0.18) 0%, transparent 22%),
+        radial-gradient(circle at 50% 84%, rgba(255, 153, 51, 0.12) 0%, transparent 28%),
+        linear-gradient(160deg, #10192c 0%, #09111d 48%, #07120f 100%);
+}
+
+.science-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 84px 84px;
+    opacity: 0.3;
+    z-index: 0;
+}
+
+.science-hero .sub-hero-overlay {
+    background: linear-gradient(180deg, rgba(7, 13, 23, 0.24) 0%, rgba(7, 13, 23, 0.9) 100%);
+}
+
+.science-hero .sub-hero-content {
+    max-width: 940px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+}
+
+.science-hero h1 {
+    max-width: 14ch;
+    line-height: 1.03;
+    margin-bottom: 8px;
+}
+
+.science-hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.science-hero-pills {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.science-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+.science-pill.space {
+    color: var(--primary-saffron);
+    border-color: rgba(255, 153, 51, 0.3);
+}
+
+.science-pill.physics {
+    color: var(--primary-gold);
+    border-color: rgba(255, 176, 31, 0.3);
+}
+
+.science-pill.biology {
+    color: var(--primary-green);
+    border-color: rgba(18, 136, 7, 0.3);
+}
+
+.science-stats-section {
+    background: linear-gradient(to bottom, rgba(7, 13, 23, 0.98) 0%, rgba(9, 13, 22, 1) 100%);
+}
+
+.science-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.science-stat-card {
+    position: relative;
+    padding: 24px 22px;
+    overflow: hidden;
+}
+
+.science-stat-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 4px;
+    background: var(--gradient-saffron-gold);
+}
+
+.science-stat-label {
+    display: inline-block;
+    color: var(--primary-gold);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.science-stat-value {
+    display: block;
+    font-size: 2rem;
+    line-height: 1.05;
+    letter-spacing: -0.8px;
+    margin-bottom: 10px;
+}
+
+.science-stat-detail {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.65;
+}
+
+.science-isro-section {
+    background: linear-gradient(to bottom, rgba(9, 13, 22, 1) 0%, rgba(7, 13, 23, 0.97) 100%);
+}
+
+.science-isro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 22px;
+}
+
+.science-isro-card {
+    position: relative;
+    padding: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.science-isro-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 4px;
+    background: var(--primary-gold);
+}
+
+.science-isro-card[data-mission-type="space"]::before {
+    background: var(--primary-saffron);
+}
+
+.science-isro-card h3 {
+    font-size: 1.55rem;
+    margin-bottom: -2px;
+}
+
+.science-isro-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.science-mission-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 22px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--text-light);
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.16) 0%, transparent 28%),
+        linear-gradient(135deg, rgba(255, 153, 51, 0.18), rgba(255, 176, 31, 0.12));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.science-avatar-frame {
+    position: relative;
+    overflow: hidden;
+    display: block;
+}
+
+.science-avatar-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    max-width: none;
+    max-height: none;
+    box-sizing: border-box;
+}
+
+.science-avatar-image-contain {
+    object-fit: cover;
+    object-position: center center;
+    padding: 0;
+}
+
+.science-avatar-image-cover {
+    object-fit: cover;
+    object-position: center top;
+}
+
+.science-isro-card[data-mission-type="space"] .science-mission-avatar {
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.16) 0%, transparent 28%),
+        linear-gradient(135deg, rgba(255, 153, 51, 0.18), rgba(255, 176, 31, 0.12));
+}
+
+.science-isro-card .science-badge.space {
+    color: var(--primary-saffron);
+    background: rgba(255, 153, 51, 0.12);
+    border-color: rgba(255, 153, 51, 0.22);
+}
+
+.science-isro-card .science-badge.physics {
+    color: var(--primary-gold);
+    background: rgba(255, 176, 31, 0.12);
+    border-color: rgba(255, 176, 31, 0.22);
+}
+
+.science-mission-year {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.science-mission-summary,
+.science-mission-contribution,
+.science-scientist-achievement,
+.science-scientist-contribution {
+    color: var(--text-muted);
+    line-height: 1.65;
+}
+
+.science-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.science-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-light);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.science-filters-bar {
+    align-items: flex-end;
+}
+
+.science-filters-bar .tab-container {
+    margin-bottom: 0;
+}
+
+.science-scientist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.science-scientist-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    min-height: 100%;
+    overflow: hidden;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.science-scientist-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 5px;
+    background: var(--science-accent, var(--primary-gold));
+}
+
+.science-scientist-card[data-category="space"] {
+    --science-accent: var(--primary-saffron);
+}
+
+.science-scientist-card[data-category="physics"] {
+    --science-accent: var(--primary-gold);
+}
+
+.science-scientist-card[data-category="medicine"],
+.science-scientist-card[data-category="biology"] {
+    --science-accent: var(--primary-green);
+}
+
+.science-scientist-card[data-category="agriculture"] {
+    --science-accent: var(--primary-saffron);
+}
+
+.science-scientist-card[data-category="mathematics"] {
+    --science-accent: var(--primary-gold);
+}
+
+.science-scientist-card:hover,
+.science-scientist-card:focus-visible {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-glow-active);
+    border-color: rgba(255, 176, 31, 0.28);
+}
+
+.science-scientist-card:focus-visible {
+    outline: 2px solid rgba(255, 176, 31, 0.45);
+    outline-offset: 3px;
+}
+
+.science-scientist-card-head {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.science-scientist-avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 24px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--text-light);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 8px 24px rgba(0, 0, 0, 0.18);
+    background: linear-gradient(135deg, rgba(255, 153, 51, 0.14), rgba(255, 176, 31, 0.08));
+}
+
+.science-scientist-avatar.physics,
+.science-scientist-avatar.mathematics {
+    background: linear-gradient(135deg, rgba(255, 176, 31, 0.14), rgba(255, 255, 255, 0.05));
+}
+
+.science-scientist-avatar.cv-raman .science-avatar-image-cover,
+.science-modal-avatar.cv-raman .science-avatar-image-cover {
+    object-position: center 18%;
+}
+
+.science-scientist-avatar.space,
+.science-scientist-avatar.agriculture {
+    background: linear-gradient(135deg, rgba(255, 153, 51, 0.14), rgba(255, 176, 31, 0.08));
+}
+
+.science-scientist-avatar.medicine,
+.science-scientist-avatar.biology {
+    background: linear-gradient(135deg, rgba(18, 136, 7, 0.14), rgba(63, 191, 73, 0.08));
+}
+
+.science-scientist-title h3 {
+    font-size: 1.45rem;
+    margin: 10px 0 6px;
+}
+
+.science-scientist-title p {
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.science-scientist-footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.science-card-note {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.science-view-btn {
+    padding: 10px 18px;
+    font-size: 0.92rem;
+}
+
+.science-empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 34px 24px;
+}
+
+.science-empty-state h3 {
+    font-size: 1.7rem;
+    margin-bottom: 10px;
+}
+
+.science-empty-state p {
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.science-timeline-section {
+    background: linear-gradient(to bottom, rgba(7, 13, 23, 0.97) 0%, rgba(9, 13, 22, 1) 100%);
+}
+
+.science-timeline-detail {
+    margin-bottom: 28px;
+    padding: 24px 28px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.science-timeline-detail h3 {
+    font-size: 1.75rem;
+    margin-bottom: 10px;
+}
+
+.science-timeline-detail p {
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+.science-timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 22px;
+}
+
+.science-timeline-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    text-align: left;
+    width: 100%;
+}
+
+.science-timeline-item::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 4px;
+    background: var(--science-accent, var(--primary-gold));
+    opacity: 0.9;
+}
+
+.science-timeline-item.space {
+    --science-accent: var(--primary-saffron);
+}
+
+.science-timeline-item.physics {
+    --science-accent: var(--primary-gold);
+}
+
+.science-timeline-item:hover,
+.science-timeline-item:focus-visible,
+.science-timeline-item.active {
+    transform: translateY(-6px);
+    border-color: rgba(255, 176, 31, 0.32);
+    box-shadow: var(--shadow-glow);
+}
+
+.science-timeline-item:focus-visible {
+    outline: 2px solid rgba(255, 176, 31, 0.45);
+    outline-offset: 3px;
+}
+
+.science-timeline-item h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0;
+}
+
+.science-timeline-item p {
+    color: var(--text-muted);
+    font-size: 0.94rem;
+}
+
+.science-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+}
+
+.science-badge.all {
+    color: var(--text-light);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.science-badge.space,
+.science-badge.agriculture {
+    color: var(--primary-saffron);
+    background: rgba(255, 153, 51, 0.12);
+    border-color: rgba(255, 153, 51, 0.22);
+}
+
+.science-badge.physics,
+.science-badge.mathematics {
+    color: var(--primary-gold);
+    background: rgba(255, 176, 31, 0.12);
+    border-color: rgba(255, 176, 31, 0.22);
+}
+
+.science-badge.medicine,
+.science-badge.biology {
+    color: var(--primary-green);
+    background: rgba(18, 136, 7, 0.12);
+    border-color: rgba(18, 136, 7, 0.22);
+}
+
+.science-modal .modal-card {
+    max-width: 900px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.science-modal-layout {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    min-height: 100%;
+}
+
+.science-modal-hero {
+    padding: 42px 34px;
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.1) 0%, transparent 28%),
+        linear-gradient(160deg, rgba(17, 27, 45, 1) 0%, rgba(7, 17, 29, 1) 55%, rgba(6, 20, 15, 1) 100%);
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+}
+
+.science-modal-avatar {
+    width: 118px;
+    height: 118px;
+    border-radius: 30px;
+    display: grid;
+    place-items: center;
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--text-light);
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.16) 0%, transparent 28%),
+        linear-gradient(135deg, rgba(255, 153, 51, 0.14), rgba(255, 176, 31, 0.12));
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.science-modal-avatar.physics,
+.science-modal-avatar.mathematics {
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.16) 0%, transparent 28%),
+        linear-gradient(135deg, rgba(255, 176, 31, 0.14), rgba(255, 255, 255, 0.06));
+}
+
+.science-modal-avatar.space,
+.science-modal-avatar.agriculture {
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.16) 0%, transparent 28%),
+        linear-gradient(135deg, rgba(255, 153, 51, 0.14), rgba(255, 176, 31, 0.12));
+}
+
+.science-modal-avatar.medicine,
+.science-modal-avatar.biology {
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.16) 0%, transparent 28%),
+        linear-gradient(135deg, rgba(18, 136, 7, 0.14), rgba(63, 191, 73, 0.08));
+}
+
+.science-modal-hero h3 {
+    font-size: 2.1rem;
+    margin: 6px 0 0;
+}
+
+.science-modal-hero p {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.science-modal-body {
+    padding: 42px 34px;
+}
+
+.science-highlight-list {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--text-muted);
+    display: grid;
+    gap: 10px;
+}
+
+.science-modal-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+@media (max-width: 1024px) {
+    .science-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .science-isro-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .science-modal-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .science-modal-hero {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+}
+
+@media (max-width: 768px) {
+    .science-hero {
+        min-height: 420px;
+        padding: 100px 0 70px;
+    }
+
+    .science-hero h1 {
+        font-size: 2.8rem;
+        max-width: 12ch;
+    }
+
+    .science-hero-actions {
+        flex-direction: column;
+        width: min(100%, 320px);
+    }
+
+    .science-hero-actions .btn {
+        width: 100%;
+    }
+
+    .science-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .science-isro-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .science-scientist-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .science-scientist-card-head,
+    .science-isro-card-top {
+        flex-direction: column;
+    }
+
+    .science-scientist-avatar {
+        width: 82px;
+        height: 82px;
+    }
+
+    .science-mission-avatar {
+        width: 68px;
+        height: 68px;
+    }
+
+    .science-timeline {
+        grid-template-columns: 1fr;
+    }
+
+    .science-modal-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .science-modal-hero,
+    .science-modal-body {
+        padding: 28px 20px;
+    }
+
+    .science-modal-hero {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .science-modal-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .science-filters-bar {
+        align-items: stretch;
+    }
+
+    .science-filters-bar .search-box-wrapper {
+        width: 100%;
+    }
 }
 
 /* ==========================================================================
@@ -4459,8 +5958,31 @@ body.light-theme .option-btn {
 }
 
 body.light-theme .map-tooltip {
-    background: rgba(255, 255, 255, 0.95);
-    color: #000;
+    background: rgba(255, 255, 255, 0.97);
+    border-color: rgba(212, 175, 55, 0.3);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 0 20px rgba(212, 175, 55, 0.06);
+    color: #1a1a2e;
+}
+
+body.light-theme .tooltip-header {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(255, 153, 51, 0.06));
+}
+
+body.light-theme .tooltip-label {
+    color: rgba(0, 0, 0, 0.45);
+}
+
+body.light-theme .tooltip-value {
+    color: rgba(0, 0, 0, 0.8);
+}
+
+body.light-theme .tooltip-footer {
+    color: rgba(0, 0, 0, 0.4);
+    border-top-color: rgba(0, 0, 0, 0.06);
+}
+
+body.light-theme .tooltip-divider {
+    background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.25), transparent);
 }
 
 body.light-theme .chat-message.user {
@@ -4494,6 +6016,106 @@ body.light-theme .footer-credits p {
     color: var(--text-muted);
 }
 
+/* Science page light mode */
+body.light-theme .science-page-body {
+    background:
+        radial-gradient(circle at top left, rgba(255, 176, 31, 0.08) 0%, transparent 28%),
+        radial-gradient(circle at 82% 16%, rgba(18, 136, 7, 0.08) 0%, transparent 24%),
+        radial-gradient(circle at 50% 110%, rgba(255, 153, 51, 0.05) 0%, transparent 34%),
+        var(--bg-dark-deep);
+}
+
+body.light-theme .science-hero {
+    background:
+        radial-gradient(circle at 20% 24%, rgba(255, 176, 31, 0.15) 0%, transparent 22%),
+        radial-gradient(circle at 80% 30%, rgba(18, 136, 7, 0.11) 0%, transparent 22%),
+        radial-gradient(circle at 50% 84%, rgba(255, 153, 51, 0.08) 0%, transparent 28%),
+        linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(247, 249, 252, 0.98) 55%, rgba(242, 247, 243, 0.98) 100%);
+}
+
+body.light-theme .science-hero::before {
+    background:
+        linear-gradient(90deg, rgba(15, 23, 42, 0.06) 1px, transparent 1px),
+        linear-gradient(rgba(15, 23, 42, 0.06) 1px, transparent 1px);
+    opacity: 0.35;
+}
+
+body.light-theme .science-hero .sub-hero-overlay {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.56) 0%, rgba(255, 255, 255, 0.88) 100%);
+}
+
+body.light-theme .science-hero .science-pill {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(15, 23, 42, 0.08);
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+}
+
+body.light-theme .science-stats-section,
+body.light-theme .science-isro-section,
+body.light-theme .science-scientists-section,
+body.light-theme .science-timeline-section {
+    background: transparent;
+}
+
+body.light-theme .science-stat-detail,
+body.light-theme .science-mission-summary,
+body.light-theme .science-mission-contribution,
+body.light-theme .science-scientist-achievement,
+body.light-theme .science-scientist-contribution,
+body.light-theme .science-timeline-detail p,
+body.light-theme .science-timeline-item p,
+body.light-theme .science-modal-hero p,
+body.light-theme .science-highlight-list,
+body.light-theme .science-empty-state p,
+body.light-theme .science-scientist-title p {
+    color: var(--text-muted);
+}
+
+body.light-theme .science-timeline-detail,
+body.light-theme .science-timeline-item {
+    border-color: rgba(15, 23, 42, 0.08);
+}
+
+body.light-theme .science-timeline-item:hover,
+body.light-theme .science-timeline-item:focus-visible,
+body.light-theme .science-timeline-item.active {
+    border-color: rgba(255, 176, 31, 0.34);
+}
+
+body.light-theme .science-modal .modal-card {
+    background: rgba(255, 255, 255, 0.96);
+    border-color: rgba(15, 23, 42, 0.08);
+}
+
+body.light-theme .science-modal-hero {
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.8) 0%, transparent 28%),
+        linear-gradient(160deg, rgba(255, 247, 231, 0.96) 0%, rgba(247, 249, 252, 0.98) 55%, rgba(238, 247, 241, 0.98) 100%);
+    border-right-color: rgba(15, 23, 42, 0.08);
+    border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+body.light-theme .science-modal-avatar {
+    color: var(--text-light);
+    border-color: rgba(15, 23, 42, 0.08);
+}
+
+body.light-theme .science-chip,
+body.light-theme .science-badge.all {
+    background: rgba(15, 23, 42, 0.04);
+    border-color: rgba(15, 23, 42, 0.08);
+}
+
+body.light-theme .science-isro-card .science-badge.space,
+body.light-theme .science-isro-card .science-badge.physics,
+body.light-theme .science-badge.space,
+body.light-theme .science-badge.physics,
+body.light-theme .science-badge.medicine,
+body.light-theme .science-badge.biology {
+    background: rgba(15, 23, 42, 0.04);
+    border-color: rgba(15, 23, 42, 0.08);
+}
+
 
 /* Theme Toggle Button */
 .btn-theme-toggle {
@@ -4508,6 +6130,22 @@ body.light-theme .footer-credits p {
     justify-content: center;
     transition: var(--transition-smooth);
     margin-right: 10px;
+}
+
+.theme-toggle-icon {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    color: var(--primary-gold);
+}
+
+.theme-toggle-icon circle {
+    fill: currentColor;
+    stroke: none;
 }
 
 .btn-theme-toggle:hover {
