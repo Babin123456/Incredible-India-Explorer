@@ -40,6 +40,22 @@ This project uses no complex build tools or backend frameworks. It runs purely i
    ```
 3. Open `index.html` in your favorite web browser!
 
+### Firebase configuration for Vercel
+
+Do not commit real Firebase secrets to GitHub. Copy [.env.example](.env.example) to your deployment environment and set these values in Vercel:
+
+- FIREBASE_API_KEY
+- FIREBASE_AUTH_DOMAIN
+- FIREBASE_PROJECT_ID
+- FIREBASE_STORAGE_BUCKET
+- FIREBASE_MESSAGING_SENDER_ID
+- FIREBASE_APP_ID
+- FIREBASE_MEASUREMENT_ID
+
+You can also use the VITE_* equivalents if you prefer.
+
+The app will read these values at runtime via the /api/firebase-config endpoint.
+
 ## Demo
 
 <img width="1909" height="910" alt="image" src="https://github.com/user-attachments/assets/84819247-7698-4cb5-ac16-c7f913733add" />

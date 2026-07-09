@@ -6,7 +6,7 @@
 // - On every other page: those elements are null, so that block is skipped
 //   entirely, and only the navbar profile-dropdown logic runs.
 
-import { auth, googleProvider } from './firebase-config.js';
+import { auth, googleProvider, isFirebaseConfigured } from './firebase-config.js';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -99,7 +99,10 @@ if (authCard) {
       'auth/email-already-in-use': 'An account already exists with this email.',
       'auth/weak-password': 'Password should be at least 6 characters.',
       'auth/popup-closed-by-user': 'Google sign-in was cancelled.',
-      'auth/too-many-requests': 'Too many attempts. Please try again later.'
+      'auth/too-many-requests': 'Too many attempts. Please try again later.',
+      'auth/configuration-not-found': 'Authentication is currently unavailable. Please check the Firebase configuration.',
+      'auth/invalid-api-key': 'Authentication is currently unavailable. Please check the Firebase configuration.',
+      'auth/network-request-failed': 'Network error. Please check your connection and try again.'
     };
     return map[code] || 'Something went wrong. Please try again.';
   }
@@ -107,6 +110,14 @@ if (authCard) {
   function setLoading(isLoading) {
     submitBtn.disabled = isLoading;
     btnGoogle.disabled = isLoading;
+  }
+
+  function ensureAuthReady() {
+    if (!auth || !googleProvider || !isFirebaseConfigured) {
+      showMessage('Authentication is currently unavailable. Please check the Firebase configuration.', 'error');
+      return false;
+    }
+    return true;
   }
 
   authForm.addEventListener('submit', async (e) => {
@@ -130,6 +141,10 @@ if (authCard) {
         return;
       }
 
+      if (!ensureAuthReady()) {
+        return;
+      }
+
       try {
         setLoading(true);
         const cred = await createUserWithEmailAndPassword(auth, email, password);
@@ -142,6 +157,10 @@ if (authCard) {
         setLoading(false);
       }
     } else {
+      if (!ensureAuthReady()) {
+        return;
+      }
+
       try {
         setLoading(true);
         await signInWithEmailAndPassword(auth, email, password);
@@ -157,6 +176,10 @@ if (authCard) {
 
   btnGoogle.addEventListener('click', async () => {
     clearMessage();
+    if (!ensureAuthReady()) {
+      return;
+    }
+
     try {
       setLoading(true);
       await signInWithPopup(auth, googleProvider);
@@ -173,6 +196,9 @@ if (authCard) {
     const email = emailInput.value.trim();
     if (!email) {
       showMessage('Enter your email above first, then click "Forgot Password?".');
+      return;
+    }
+    if (!ensureAuthReady()) {
       return;
     }
     try {
@@ -316,7 +342,9 @@ function buildProfileDropdown(user) {
   });
 
   wrapper.querySelector('#logoutBtn').addEventListener('click', async () => {
-    await signOut(auth);
+    if (auth) {
+      await signOut(auth);
+    }
     window.location.href = REDIRECT_URL;
   });
 
@@ -351,12 +379,16 @@ function handleNavAuthState(user) {
    PART 3 — SINGLE AUTH STATE LISTENER (drives both parts above)
    ========================================================================= */
 
-onAuthStateChanged(auth, (user) => {
-  // If we're on the login page and the user is already logged in, skip
-  // straight to the homepage instead of showing the dropdown here.
-  if (authCard && user) {
-    window.location.href = REDIRECT_URL;
-    return;
-  }
-  handleNavAuthState(user);
-});
+if (auth) {
+  onAuthStateChanged(auth, (user) => {
+    // If we're on the login page and the user is already logged in, skip
+    // straight to the homepage instead of showing the dropdown here.
+    if (authCard && user) {
+      window.location.href = REDIRECT_URL;
+      return;
+    }
+    handleNavAuthState(user);
+  });
+} else {
+  handleNavAuthState(null);
+}
