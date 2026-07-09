@@ -14,6 +14,39 @@ const defaultFirebaseConfig = {
   measurementId: "YOUR_MEASUREMENT_ID"
 };
 
+function normalizeMeasurementId(measurementId) {
+  if (!measurementId) return undefined;
+
+  const value = String(measurementId).trim().replace(/\s+/g, "");
+  if (!value || value === "YOUR_MEASUREMENT_ID") return undefined;
+
+  return value.replace(/[Øø]/g, "0");
+}
+
+function sanitizeFirebaseConfig(config) {
+  if (!config || typeof config !== "object") {
+    return {};
+  }
+
+  const sanitized = { ...config };
+
+  for (const key of Object.keys(sanitized)) {
+    if (typeof sanitized[key] === "string") {
+      sanitized[key] = sanitized[key].trim();
+    }
+  }
+
+  if (sanitized.measurementId) {
+    sanitized.measurementId = normalizeMeasurementId(sanitized.measurementId);
+  }
+
+  if (!sanitized.measurementId) {
+    delete sanitized.measurementId;
+  }
+
+  return sanitized;
+}
+
 function readRuntimeFirebaseConfig() {
   const globalScope = typeof globalThis !== "undefined" ? globalThis : {};
   const runtimeConfig =
@@ -23,12 +56,12 @@ function readRuntimeFirebaseConfig() {
     null;
 
   if (runtimeConfig) {
-    return runtimeConfig;
+    return sanitizeFirebaseConfig(runtimeConfig);
   }
 
   const metaEnv = typeof import.meta !== "undefined" && import.meta.env ? import.meta.env : null;
   if (metaEnv) {
-    return {
+    return sanitizeFirebaseConfig({
       apiKey: metaEnv.VITE_FIREBASE_API_KEY || metaEnv.FIREBASE_API_KEY || metaEnv.NEXT_PUBLIC_FIREBASE_API_KEY || undefined,
       authDomain: metaEnv.VITE_FIREBASE_AUTH_DOMAIN || metaEnv.FIREBASE_AUTH_DOMAIN || undefined,
       projectId: metaEnv.VITE_FIREBASE_PROJECT_ID || metaEnv.FIREBASE_PROJECT_ID || undefined,
@@ -36,10 +69,10 @@ function readRuntimeFirebaseConfig() {
       messagingSenderId: metaEnv.VITE_FIREBASE_MESSAGING_SENDER_ID || metaEnv.FIREBASE_MESSAGING_SENDER_ID || undefined,
       appId: metaEnv.VITE_FIREBASE_APP_ID || metaEnv.FIREBASE_APP_ID || undefined,
       measurementId: metaEnv.VITE_FIREBASE_MEASUREMENT_ID || metaEnv.FIREBASE_MEASUREMENT_ID || undefined
-    };
+    });
   }
 
-  return defaultFirebaseConfig;
+  return sanitizeFirebaseConfig(defaultFirebaseConfig);
 }
 
 async function loadFirebaseConfig() {
@@ -59,7 +92,7 @@ async function loadFirebaseConfig() {
     if (response.ok) {
       const remoteConfig = await response.json();
       if (remoteConfig?.apiKey && remoteConfig.apiKey !== "YOUR_API_KEY") {
-        return remoteConfig;
+        return sanitizeFirebaseConfig(remoteConfig);
       }
     }
   } catch (error) {
