@@ -364,4 +364,4 @@
         search,
         getSearchIndex
     };
-})();
+})();// Refactored to use FavoritesManager
