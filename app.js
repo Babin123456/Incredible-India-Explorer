@@ -6011,3 +6011,4 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+// Initialize ScrollAnimator
