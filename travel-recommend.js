@@ -353,4 +353,4 @@
   } else {
     initRecommendationEngine();
   }
-})(typeof window !== 'undefined' ? window : globalThis);
+})(typeof window !== 'undefined' ? window : globalThis);// Use APIClient for fetching

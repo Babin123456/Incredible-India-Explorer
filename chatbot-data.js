@@ -92,3 +92,4 @@ function findBestResponse(userInput) {
     const randomIndex = Math.floor(Math.random() * fallbackResponses.length);
     return fallbackResponses[randomIndex];
 }
+// Use APIClient for fetching

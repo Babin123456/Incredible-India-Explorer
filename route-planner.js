@@ -269,4 +269,4 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = RoutePlanner;
 } else {
   window.RoutePlanner = RoutePlanner;
-}
+}// Use APIClient for fetching
