@@ -1167,4 +1167,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.body.dataset.page === 'rivers') {
         initRiversPage();
     }
-});
+});// Import Meta Updater
