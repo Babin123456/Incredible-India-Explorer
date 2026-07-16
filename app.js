@@ -48,8 +48,9 @@ window.setupFocusTrap = function(modalElement) {
                 if (document.activeElement === last) {
                     first.focus();
                     e.preventDefault();
-                }
-            }
+          }
+     });
+ }
         }
     };
     
