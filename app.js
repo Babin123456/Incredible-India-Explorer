@@ -6007,6 +6007,7 @@ if ('serviceWorker' in navigator) {
                   showPWAToast(event.data.message, 'success');
                 }
             });
-        });
+        }
+    });
 }
 
