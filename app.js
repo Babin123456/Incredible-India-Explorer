@@ -6006,8 +6006,7 @@ if ('serviceWorker' in navigator) {
                if (event.data?.type === 'BACKGROUND_SYNC_COMPLETE') {
                   showPWAToast(event.data.message, 'success');
                 }
-            });
-
-    });
+             });
+         }
 }
 
