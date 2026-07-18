@@ -90,6 +90,41 @@ function iiDisconnectRouteObservers() {
     }
     window.__iiRouteState.observers.clear();
 }
+/**
+ * Safe init helper — wraps a page init function in try-catch so a single
+ * failing section doesn't break the entire SPA route transition.
+ * Handles both sync and async (promise-returning) init functions.
+ */
+function safeInitFn(initFn, name) {
+    try {
+        const result = initFn();
+        if (result && typeof result.catch === 'function') {
+            result.catch(err => {
+                console.error(`[App] Async error in ${name}:`, err);
+                if (window.ToastNotifier) {
+                    window.ToastNotifier.error(`${name} encountered an error. Some features may not work.`);
+                }
+            });
+        }
+    } catch (err) {
+        console.error(`[App] Error initializing ${name}:`, err);
+        if (window.ToastNotifier) {
+            window.ToastNotifier.error(`${name} failed to load. Please refresh the page.`);
+        }
+    }
+}
+
+/**
+ * Error boundary for lazyLoadScript chains — logs the failure and shows a
+ * user-facing toast so the error is visible rather than a silent console line.
+ */
+function handleInitError(pageName, err) {
+    console.error(`[App] Failed to load ${pageName} page module:`, err);
+    if (window.ToastNotifier) {
+        window.ToastNotifier.error(`Could not load ${pageName} content. Please try again.`);
+    }
+}
+
 /* Initialise the unified toast notification system */
 (function initToastSystem() {
     var pathPrefix = (window.location.pathname.includes('/states/') ||
@@ -120,35 +155,36 @@ document.addEventListener('app:route-changed', () => {
     const pathname = window.location.pathname;
 
     if (pathname.includes('cuisine.html')) {
-        window.lazyLoadScript('js-modules/cuisine.js').then(() => initCuisinePage());
+        window.lazyLoadScript('js-modules/cuisine.js').then(() => initCuisinePage()).catch(err => handleInitError('Cuisine', err));
     } else if (pathname.includes('festivals.html')) {
-        window.lazyLoadScript('js-modules/festivals.js').then(() => initFestivalsPage());
+        window.lazyLoadScript('js-modules/festivals.js').then(() => initFestivalsPage()).catch(err => handleInitError('Festivals', err));
     } else if (pathname.includes('culture.html')) {
-        window.lazyLoadScript('js-modules/culture.js').then(() => initCulturePage());
+        window.lazyLoadScript('js-modules/culture.js').then(() => initCulturePage()).catch(err => handleInitError('Culture', err));
     } else if (pathname.includes('literature.html')) {
-        window.lazyLoadScript('js-modules/literature.js').then(() => initLiteraturePage());
+        window.lazyLoadScript('js-modules/literature.js').then(() => initLiteraturePage()).catch(err => handleInitError('Literature', err));
     } else if (pathname.includes('dance.html')) {
-        window.lazyLoadScript('js-modules/dance.js').then(() => initDancePage());
+        window.lazyLoadScript('js-modules/dance.js').then(() => initDancePage()).catch(err => handleInitError('Dance', err));
     } else if (pathname.includes('music.html')) {
-        window.lazyLoadScript('js-modules/music.js').then(() => initMusicPage());
+        window.lazyLoadScript('js-modules/music.js').then(() => initMusicPage()).catch(err => handleInitError('Music', err));
     } else if (pathname.includes('sports.html')) {
-        window.lazyLoadScript('js-modules/sports.js').then(() => initSportsPage());
+        window.lazyLoadScript('js-modules/sports.js').then(() => initSportsPage()).catch(err => handleInitError('Sports', err));
     } else if (pathname.includes('science.html')) {
-        window.lazyLoadScript('js-modules/science.js').then(() => initSciencePage());
+        window.lazyLoadScript('js-modules/science.js').then(() => initSciencePage()).catch(err => handleInitError('Science', err));
     } else if (pathname.includes('personalities.html')) {
         initScrollEffects();
-        window.lazyLoadScript('js-modules/personalities.js').then(() => initPersonalitiesPage());
+        window.lazyLoadScript('js-modules/personalities.js').then(() => safeInitFn(initPersonalitiesPage, 'Personalities')).catch(err => handleInitError('Personalities', err));
     } else if (pathname.includes('spiritual.html')) {
         initScrollEffects();
-        window.lazyLoadScript('js-modules/spiritual.js').then(() => initSpiritualCarousel());
+        window.lazyLoadScript('js-modules/spiritual.js').then(() => safeInitFn(initSpiritualCarousel, 'Spiritual')).catch(err => handleInitError('Spiritual', err));
     } else if (pathname.includes('startup.html')) {
-        window.lazyLoadScript('js-modules/startup.js').then(() => initStartupPage());
+        window.lazyLoadScript('js-modules/startup.js').then(() => safeInitFn(initStartupPage, 'Startup')).catch(err => handleInitError('Startup', err));
     } else if (pathname.includes('travel.html')) {
-        window.lazyLoadScript('js-modules/roadtrip.js').then(() => initRoadTripFlipCards());
+        window.lazyLoadScript('js-modules/roadtrip.js').then(() => safeInitFn(initRoadTripFlipCards, 'Travel')).catch(err => handleInitError('Travel', err));
     } else if (pathname.includes('trip-planner.html')) {
         window.lazyLoadScript('trip-data.js')
             .then(() => window.lazyLoadScript('js-modules/trip-planner.js'))
-            .then(() => initTripPlannerPage());
+            .then(() => safeInitFn(initTripPlannerPage, 'Trip Planner'))
+            .catch(err => handleInitError('Trip Planner', err));
     } else if (pathname.includes('heritage.html')) {
         console.log('✅ Heritage page loaded successfully');
     } else if (pathname.includes('monuments.html')) {
@@ -164,13 +200,13 @@ document.addEventListener('app:route-changed', () => {
         initScrollEffects();
 
         // Viewport-based lazy initialization of heavy landing page sections
-        const lazyInit = (elementId, initFunc) => {
+        const lazyInit = (elementId, initFunc, name) => {
             const el = document.getElementById(elementId);
             if (el && 'IntersectionObserver' in window) {
                 const obs = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            initFunc();
+                            safeInitFn(initFunc, name);
                             obs.disconnect();
                         }
                     });
@@ -178,17 +214,16 @@ document.addEventListener('app:route-changed', () => {
 
                 obs.observe(el);
             } else {
-                initFunc();
+                safeInitFn(initFunc, name);
             }
         };
 
-
-        lazyInit('map-container', initInteractiveMap);
-        lazyInit('cuisine-grid', initCuisineExplorer);
-        lazyInit('festival-timeline', initFestivals);
-        lazyInit('slider-container', initCultureSlider);
-        lazyInit('quiz-card', initQuiz);
-        lazyInit('fab-guide', initBharatGuide);
+        lazyInit('map-container', initInteractiveMap, 'Interactive Map');
+        lazyInit('cuisine-grid', initCuisineExplorer, 'Cuisine Explorer');
+        lazyInit('festival-timeline', initFestivals, 'Festivals');
+        lazyInit('slider-container', initCultureSlider, 'Culture Slider');
+        lazyInit('quiz-card', initQuiz, 'Quiz');
+        lazyInit('fab-guide', initBharatGuide, 'Bharat Guide');
     }
 });
 

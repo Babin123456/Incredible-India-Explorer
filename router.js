@@ -5,6 +5,37 @@
  */
 
 // ==========================================================================
+// 0. LOADING OVERLAY HELPERS (Issue #256)
+// ==========================================================================
+
+const RouteLoadingOverlay = {
+    timeoutId: null,
+
+    show() {
+        const overlay = document.getElementById('app-loading-overlay');
+        if (overlay) {
+            overlay.style.display = 'flex';
+            overlay.setAttribute('aria-hidden', 'false');
+        }
+        // Safety: auto-hide after 8 seconds to prevent stuck overlays
+        if (this.timeoutId) clearTimeout(this.timeoutId);
+        this.timeoutId = setTimeout(() => this.hide(), 8000);
+    },
+
+    hide() {
+        if (this.timeoutId) {
+            clearTimeout(this.timeoutId);
+            this.timeoutId = null;
+        }
+        const overlay = document.getElementById('app-loading-overlay');
+        if (overlay) {
+            overlay.style.display = 'none';
+            overlay.setAttribute('aria-hidden', 'true');
+        }
+    }
+};
+
+// ==========================================================================
 // 1. LIFECYCLE & CLEANUP ENGINE
 // ==========================================================================
 
@@ -492,11 +523,7 @@ class Router {
         this.historyTracker.push(path);
 
         // Show loading overlay
-        try {
-            if (window.LoadingOverlay) {
-                window.LoadingOverlay.show('Loading ' + path.replace(/^./, '') + '...');
-            }
-        } catch (e) {}
+        RouteLoadingOverlay.show();
 
         // Cleanup resources registered on the current route
         if (this.currentPath) {
@@ -602,24 +629,30 @@ class Router {
 
                 // Hide loading overlay after transition completes
                 setTimeout(function () {
-                    try {
-                        if (window.LoadingOverlay) window.LoadingOverlay.hide();
-                    } catch (e) {}
+                    RouteLoadingOverlay.hide();
                 }, 400);
             } else {
-                try { if (window.LoadingOverlay) window.LoadingOverlay.hide(); } catch (e) {}
+                RouteLoadingOverlay.hide();
                 window.location.href = path;
             }
 
         } catch (error) {
-            try { if (window.LoadingOverlay) window.LoadingOverlay.hide(); } catch (e) {}
+            RouteLoadingOverlay.hide();
             this.logger.error(`Failed to handle route: ${path}`, error);
-            try {
-                if (window.ToastNotifier) {
-                    window.ToastNotifier.error('Failed to load page. Redirecting to fallback.');
-                }
-            } catch (t) {}
-            window.location.href = path;
+
+            // Render error page inline instead of falling back to hard navigation
+            if (error.message && error.message.includes('HTTP error')) {
+                this.renderNotFound(path, error.message);
+                this.transitionManager.transitionIn(transitionType);
+            } else {
+                try {
+                    if (window.ToastNotifier) {
+                        window.ToastNotifier.error('Failed to load page. Please try again.');
+                    }
+                } catch (t) {}
+                // Fall back only for network errors (not 404s)
+                window.location.href = path;
+            }
         }
     }
 
@@ -799,6 +832,104 @@ ${exposedCode}
             detail: { url: window.location.pathname }
         });
         document.dispatchEvent(event);
+    }
+
+    /**
+     * Renders a 404 Not Found page inline when a route fetch returns HTTP 404/500.
+     * Instead of a hard navigation, the user sees a branded error page with
+     * suggested pages and a search bar to find what they're looking for.
+     */
+    renderNotFound(failedPath, errorMsg) {
+        if (!this.appRoot) return;
+
+        const isNotFound = errorMsg && errorMsg.includes('status: 404');
+        document.title = isNotFound ? 'Page Not Found — Incredible India Explorer' : 'Server Error — Incredible India Explorer';
+
+        // Build a list of suggested pages from known search data
+        const suggestions = [];
+        if (window.indiaSearchIndex && Array.isArray(window.indiaSearchIndex)) {
+            const shuffled = [...window.indiaSearchIndex].sort(() => Math.random() - 0.5);
+            for (let i = 0; i < Math.min(6, shuffled.length); i++) {
+                suggestions.push(shuffled[i]);
+            }
+        }
+
+        const suggestionsHtml = suggestions.length > 0 ? `
+            <div class="not-found-suggestions">
+                <h3>Try these pages instead:</h3>
+                <div class="not-found-links">
+                    ${suggestions.map(s => {
+                        const prefix = getPathPrefix();
+                        return `<a href="${prefix}${s.url}" class="not-found-link">${s.title}</a>`;
+                    }).join('')}
+                </div>
+            </div>
+        ` : '';
+
+        const titleText = isNotFound ? 'Page Not Found' : 'Something Went Wrong';
+        const codeText = isNotFound ? '404' : '500';
+        const messageHtml = isNotFound
+            ? `The page <strong>${this.escapeHtml(failedPath)}</strong>
+               could not be found. It may have been moved, renamed, or doesn't exist.`
+            : `The page <strong>${this.escapeHtml(failedPath)}</strong>
+               is temporarily unavailable. Please try again later.`;
+
+        this.appRoot.innerHTML = `
+            <div class="not-found-page" data-route="404">
+                <div class="not-found-container">
+                    <div class="not-found-code">${codeText}</div>
+                    <h1 class="not-found-title">${titleText}</h1>
+                    <p class="not-found-message">${messageHtml}</p>
+                    <div class="not-found-actions">
+                        <a href="/" class="btn btn-primary not-found-home-btn" data-router-ignore>
+                            ← Back to Home
+                        </a>
+                        <button class="btn btn-secondary not-found-search-btn" id="not-found-open-search">
+                            🔍 Search the Site
+                        </button>
+                    </div>
+                    ${suggestionsHtml}
+                </div>
+            </div>
+        `;
+
+        // Bind search button to open the global search modal
+        const searchBtn = document.getElementById('not-found-open-search');
+        if (searchBtn && typeof openSearchModal === 'function') {
+            searchBtn.addEventListener('click', openSearchModal);
+        }
+
+        // Intercept clicks on suggested links to use SPA router
+        this.appRoot.querySelectorAll('.not-found-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = link.getAttribute('href');
+                if (href) this.handleRoute(href, true);
+            });
+        });
+
+        // Intercept the "Back to Home" link via SPA router.
+        // Stop propagation to prevent the body-level click handler from triggering
+        // a duplicate handleRoute call.
+        const homeBtn = this.appRoot.querySelector('.not-found-home-btn');
+        if (homeBtn) {
+            homeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.handleRoute('/', true);
+            });
+        }
+
+        this.dispatchRouteEvent();
+    }
+
+    /**
+     * Minimal HTML entity escaping for user-provided content.
+     */
+    escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
     }
 }
 
