@@ -8,7 +8,7 @@
 // 1. CONFIGURATION & STATE
 // ==========================================================================
 
-const CACHE_VERSION = 'v2.2';
+const CACHE_VERSION = 'v2.3';
 const CACHE_NAME_STATIC = `india-explorer-static-${CACHE_VERSION}`;
 const CACHE_NAME_PAGES = `india-explorer-pages-${CACHE_VERSION}`;
 const CACHE_NAME_IMAGES = `india-explorer-images-${CACHE_VERSION}`;

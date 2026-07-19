@@ -1887,6 +1887,9 @@ function initBharatGuide() {
     const chatMessages = document.getElementById('chat-messages');
     const chatInput = document.getElementById('chat-input');
     const btnSendMsg = document.getElementById('btn-send-msg');
+    
+    // Add current path variable for context
+    let currentBotPath = window.location.pathname;
 
     if (!fabGuide) return; // Not on this page
 
@@ -1910,6 +1913,76 @@ function initBharatGuide() {
         }
     });
 
+    // Helper to render contextual greeting and chips
+    function renderContextualGreeting(path, append = false) {
+        if (typeof getChatbotContext !== 'function') return;
+        const context = getChatbotContext(path);
+        
+        let chipsHtml = context.chips.map(chip => `<span class="chat-chip">${chip}</span>`).join('');
+        let html = `
+            <div class="chat-message bot">${context.greeting}</div>
+            <div class="chat-chips">${chipsHtml}</div>
+        `;
+        
+        if (append) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message bot-message context-update';
+            msgDiv.innerHTML = `<div class="chat-body">${html}</div>`;
+            chatMessages.appendChild(msgDiv);
+            scrollToBottom();
+        } else {
+            // Find the initial chat body and replace its contents
+            const initialChatBody = document.getElementById('chat-body');
+            if (initialChatBody) {
+                initialChatBody.innerHTML = html;
+            }
+        }
+        
+        // Add click listeners to new chips
+        const newChips = chatMessages.querySelectorAll('.chat-chip');
+        newChips.forEach(chip => {
+            // Remove old listeners by cloning or just ensure we don't add multiple
+            chip.onclick = () => {
+                chatInput.value = chip.textContent.replace(/^[^\w\s]+/, '').trim(); // Remove emoji
+                sendMessage();
+            };
+        });
+    }
+
+    // Initialize initial view
+    renderContextualGreeting(currentBotPath, false);
+
+    // Subscribe to EventBus for contextual updates
+    if (window.AppEventBus) {
+        window.AppEventBus.on('page:changed', (data) => {
+            currentBotPath = data.path;
+            const isOpen = chatWindow.classList.contains('open');
+            renderContextualGreeting(currentBotPath, isOpen);
+        });
+    }
+
+    // Handle interactive button clicks (Delegation)
+    chatMessages.addEventListener('click', (e) => {
+        if (e.target.classList.contains('chat-action-btn')) {
+            const targetPath = e.target.getAttribute('data-target');
+            if (targetPath && window.appRouter) {
+                window.appRouter.handleRoute(targetPath);
+                
+                // Optional: apply highlight effect to target hash after navigation
+                const hash = new URL(targetPath, window.location.origin).hash;
+                if (hash) {
+                    setTimeout(() => {
+                        const el = document.querySelector(hash);
+                        if (el) {
+                            el.classList.add('highlight-target');
+                            setTimeout(() => el.classList.remove('highlight-target'), 2500);
+                        }
+                    }, 500); // Wait for transition and scroll
+                }
+            }
+        }
+    });
+
     // Send Message
     function sendMessage() {
         const text = chatInput.value.trim();
@@ -1922,7 +1995,7 @@ function initBharatGuide() {
         // Determine bot response using external knowledge base
         let response = "I'm sorry, I seem to be having trouble accessing my knowledge base. Let's try again later.";
         if (typeof findBestResponse === 'function') {
-            response = findBestResponse(text);
+            response = findBestResponse(text, currentBotPath);
         }
 
         // Show typing indicator
