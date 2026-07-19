@@ -641,14 +641,100 @@ const cultureData = [
   {
     "title": "Bhangra",
     "category": "dance",
+    "state": "Punjab",
     "description": "A highly energetic, celebratory folk dance from Punjab. Danced to the fast, driving rhythm of the double-headed Dhol drum, it was originally performed during the spring harvest festival Baisakhi.",
     "image": "assets/bhangra.png"
   },
   {
     "title": "Tabla",
     "category": "music",
+    "state": "Uttar Pradesh",
     "description": "The primary percussion instrument of North Indian music. It consists of a pair of small drums played with hands and fingers, capable of a vast range of acoustic tones and lightning-fast tempos.",
     "image": "assets/tabla.png"
+  },
+  {
+    "title": "Kathak",
+    "category": "dance",
+    "state": "Uttar Pradesh",
+    "description": "A classical dance form known for its fast spins, intricate footwork, and expressive storytelling, shaped by both temple traditions and the royal courts of North India.",
+    "image": "assets/dances/kathak.jpg"
+  },
+  {
+    "title": "Garba",
+    "category": "dance",
+    "state": "Gujarat",
+    "description": "A joyful circular folk dance performed during Navratri in honor of Goddess Durga, danced around a central lamp or idol to the beat of traditional songs.",
+    "image": "assets/dances/garba.png"
+  },
+  {
+    "title": "Ghoomar",
+    "category": "dance",
+    "state": "Rajasthan",
+    "description": "A graceful folk dance performed by women in flowing, twirling ghagra skirts, traditionally danced to welcome a new bride into the family.",
+    "image": "assets/dances/ghoomar.png"
+  },
+  {
+    "title": "Kalbelia",
+    "category": "dance",
+    "state": "Rajasthan",
+    "description": "A striking folk dance of the Kalbelia snake-charmer community, performed in flowing black skirts with movements that mimic a serpent. It is recognized by UNESCO as Intangible Cultural Heritage.",
+    "image": "assets/dances/kalbelia.png"
+  },
+  {
+    "title": "Kuchipudi",
+    "category": "dance",
+    "state": "Andhra Pradesh",
+    "description": "A classical dance-drama combining fast rhythmic footwork, expressive acting, and song, traditionally performed as a devotional narrative in temple courtyards.",
+    "image": "assets/dances/kuchipudi.png"
+  },
+  {
+    "title": "Lavani",
+    "category": "dance",
+    "state": "Maharashtra",
+    "description": "A powerful and energetic folk dance performed to the beat of the dholki drum, known for its strong rhythm and bold, expressive movements.",
+    "image": "assets/dances/lavani.png"
+  },
+  {
+    "title": "Manipuri",
+    "category": "dance",
+    "state": "Manipur",
+    "description": "A classical dance style marked by gentle, flowing movements and minimal facial expression, traditionally depicting the Raas Leela of Radha and Krishna.",
+    "image": "assets/dances/manipuri.png"
+  },
+  {
+    "title": "Mohiniyattam",
+    "category": "dance",
+    "state": "Kerala",
+    "description": "A graceful classical dance whose name means 'dance of the enchantress'. It features soft, swaying body movements and gentle hand gestures.",
+    "image": "assets/dances/mohiniyattam.png"
+  },
+  {
+    "title": "Odissi",
+    "category": "dance",
+    "state": "Odisha",
+    "description": "One of India's oldest classical dance forms, recognized by its signature tribhangi (three-bend) posture and sculpture-like poses inspired by temple carvings.",
+    "image": "assets/dances/odissi.png"
+  },
+  {
+    "title": "Pandavani",
+    "category": "dance",
+    "state": "Chhattisgarh",
+    "description": "A dramatic folk performance style where a single narrator sings and acts out episodes from the Mahabharata, often accompanying themselves on a small stringed instrument.",
+    "image": "assets/dances/pandavani.png"
+  },
+  {
+    "title": "Sattriya",
+    "category": "dance",
+    "state": "Assam",
+    "description": "A classical dance form introduced by the Vaishnavite saint Srimanta Sankardeva, traditionally performed within monasteries known as sattras.",
+    "image": "assets/dances/sattriya.png"
+  },
+  {
+    "title": "Chhau",
+    "category": "dance",
+    "state": "Odisha, West Bengal & Jharkhand",
+    "description": "A vigorous mask dance blending martial arts, acrobatics, and folk tradition, performed to depict stories from Hindu epics like the Mahabharata.",
+    "image": "assets/dances/chhau.png"
   }
 ];
 

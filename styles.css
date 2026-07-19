@@ -6264,6 +6264,21 @@ button {
     transform: scale(1.06);
 }
 
+.culture-card-state {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.culture-modal-state {
+    color: var(--primary-gold);
+    font-size: 0.95rem;
+    margin-top: 6px;
+    font-weight: 500;
+}
+
 /* ==========================================================================
    RESPONSIVE DESIGN ADDITIONS
    ========================================================================== */
