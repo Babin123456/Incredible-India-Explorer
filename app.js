@@ -2046,11 +2046,24 @@ function initBharatGuide() {
         if (e.key === 'Enter') sendMessage();
     });
 
+    function escapeHTML(str) {
+        return str.replace(/[&<>'"]/g, 
+            tag => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            }[tag] || tag)
+        );
+    }
+
     // Chat UI helpers
     function addMessage(text, className) {
         const msgDiv = document.createElement('div');
         msgDiv.className = `message ${className}`;
-        msgDiv.innerHTML = `<div class="message-content">${text}</div>`;
+        const content = className === 'user-message' ? escapeHTML(text) : text;
+        msgDiv.innerHTML = `<div class="message-content">${content}</div>`;
         chatMessages.appendChild(msgDiv);
         scrollToBottom();
     }
