@@ -725,5 +725,24 @@ window.indiaSearchIndex = [
     category: "Nature & Wildlife",
     description: "Search and filter Indian national parks like Jim Corbett, Kaziranga, Ranthambore, and Gir by region and fauna.",
     url: "wildlife.html"
+  },
+  // --- Folk Tales ---
+  {
+    title: "Indian Folk Tales Explorer",
+    category: "Culture & Literature",
+    description: "Explore 30+ regional folk tales, legends, Panchatantra fables, and oral traditions from different states of India.",
+    url: "folk-tales.html"
+  },
+  {
+    title: "Birbal's Khichdi (Uttar Pradesh Folk Tale)",
+    category: "Folk Tales",
+    description: "Birbal uses a slow-cooking pot above a small flame to teach Akbar a gentle lesson about warmth and hope.",
+    url: "folk-tales.html?story=birbal-khichdi"
+  },
+  {
+    title: "Tenali Raman & Golden Brinjal (Andhra Pradesh Folk Tale)",
+    category: "Folk Tales",
+    description: "Tenali Raman outmarts court jester gossip to share royal garden brinjals with his family.",
+    url: "folk-tales.html?story=tenali-brinjal"
   }
 ];
