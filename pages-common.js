@@ -119,8 +119,8 @@ function initSiteChrome() {
     }
 
     // Theme toggle (dark/light) - persisted via localStorage, same key as main site
-    if (themeBtn) {
-        const setThemeIcon = (isLightTheme) => {
+if (themeBtn && !themeBtn.dataset.listenerBound) {
+        themeBtn.dataset.listenerBound = "true";        const setThemeIcon = (isLightTheme) => {
             themeBtn.innerHTML = isLightTheme ? '🌙' : '☀️';
             themeBtn.setAttribute('title', isLightTheme ? 'Toggle Dark Mode' : 'Toggle Light Mode');
         };

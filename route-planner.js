@@ -55,6 +55,42 @@ const ROUTE_DESTINATIONS = [
 ];
 
 // ---------------------------------------------------------------------------
+// 1b. Extra travel info per destination (best time to visit, tips, attractions)
+// ---------------------------------------------------------------------------
+const DESTINATION_INFO = {
+  delhi: { bestTime: "Oct – Mar", tip: "Book monument tickets online to skip long queues.", attractions: ["Red Fort", "India Gate", "Qutub Minar"] },
+  agra: { bestTime: "Oct – Mar", tip: "Visit the Taj Mahal at sunrise for cooler weather and fewer crowds.", attractions: ["Taj Mahal", "Agra Fort", "Fatehpur Sikri"] },
+  jaipur: { bestTime: "Oct – Mar", tip: "Wear comfortable shoes — the forts involve a lot of walking.", attractions: ["Hawa Mahal", "Amber Fort", "City Palace"] },
+  jodhpur: { bestTime: "Oct – Mar", tip: "Carry water; the Blue City gets very hot by midday.", attractions: ["Mehrangarh Fort", "Jaswant Thada", "Umaid Bhawan Palace"] },
+  udaipur: { bestTime: "Sep – Mar", tip: "Catch sunset from a rooftop café overlooking Lake Pichola.", attractions: ["Lake Pichola", "City Palace", "Jag Mandir"] },
+  jaisalmer: { bestTime: "Nov – Feb", tip: "Book a desert safari in advance during peak winter season.", attractions: ["Jaisalmer Fort", "Sam Sand Dunes", "Patwon Ki Haveli"] },
+  pushkar: { bestTime: "Oct – Mar", tip: "Visit during the Pushkar Camel Fair (Nov) for a unique experience.", attractions: ["Pushkar Lake", "Brahma Temple", "Camel Fair Grounds"] },
+  amritsar: { bestTime: "Oct – Mar", tip: "Attend the Wagah Border retreat ceremony before sunset.", attractions: ["Golden Temple", "Jallianwala Bagh", "Wagah Border"] },
+  shimla: { bestTime: "Mar – Jun, Dec – Jan", tip: "Book stays early in peak summer and winter snow season.", attractions: ["The Ridge", "Mall Road", "Jakhoo Temple"] },
+  manali: { bestTime: "Mar – Jun, Oct – Feb", tip: "Carry warm clothing even in summer for higher altitudes.", attractions: ["Solang Valley", "Hadimba Temple", "Rohtang Pass"] },
+  kaza: { bestTime: "Jun – Sep", tip: "Roads open seasonally — check conditions before travelling.", attractions: ["Key Monastery", "Chandratal Lake", "Kibber Village"] },
+  leh: { bestTime: "May – Sep", tip: "Spend a day acclimatizing to the altitude before sightseeing.", attractions: ["Pangong Lake", "Leh Palace", "Nubra Valley"] },
+  rishikesh: { bestTime: "Sep – Apr", tip: "Try river rafting early morning when the water is calmer.", attractions: ["Laxman Jhula", "Triveni Ghat", "Beatles Ashram"] },
+  varanasi: { bestTime: "Oct – Mar", tip: "Watch the Ganga Aarti at Dashashwamedh Ghat in the evening.", attractions: ["Dashashwamedh Ghat", "Kashi Vishwanath Temple", "Sarnath"] },
+  khajuraho: { bestTime: "Oct – Mar", tip: "Hire a licensed guide to understand the temple carvings.", attractions: ["Western Group of Temples", "Eastern Group of Temples", "Raneh Falls"] },
+  mumbai: { bestTime: "Nov – Feb", tip: "Use local trains to beat traffic during rush hour.", attractions: ["Gateway of India", "Marine Drive", "Elephanta Caves"] },
+  goa: { bestTime: "Nov – Feb", tip: "Book beach resorts early around Christmas and New Year.", attractions: ["Baga Beach", "Fort Aguada", "Basilica of Bom Jesus"] },
+  hampi: { bestTime: "Oct – Feb", tip: "Rent a bicycle to explore the spread-out ruins comfortably.", attractions: ["Virupaksha Temple", "Vittala Temple", "Hampi Bazaar"] },
+  mysore: { bestTime: "Oct – Mar", tip: "Visit during Dasara festival for grand palace illuminations.", attractions: ["Mysore Palace", "Chamundi Hills", "Brindavan Gardens"] },
+  kochi: { bestTime: "Oct – Mar", tip: "Watch a Kathakali performance in Fort Kochi in the evening.", attractions: ["Fort Kochi", "Chinese Fishing Nets", "Mattancherry Palace"] },
+  munnar: { bestTime: "Sep – Mar", tip: "Carry a light jacket — hill mornings are cool year-round.", attractions: ["Tea Gardens", "Eravikulam National Park", "Mattupetty Dam"] },
+  alleppey: { bestTime: "Nov – Feb", tip: "Book an overnight houseboat stay for the full backwaters experience.", attractions: ["Backwaters", "Alappuzha Beach", "Marari Beach"] },
+  trivandrum: { bestTime: "Oct – Mar", tip: "Combine with a short trip to nearby Kovalam Beach.", attractions: ["Padmanabhaswamy Temple", "Napier Museum", "Kovalam Beach"] },
+  kanyakumari: { bestTime: "Oct – Mar", tip: "Arrive early to see the sunrise from the Vivekananda Rock.", attractions: ["Vivekananda Rock Memorial", "Thiruvalluvar Statue", "Sunset Point"] },
+  madurai: { bestTime: "Oct – Mar", tip: "Time your visit around the temple's evening ceremony.", attractions: ["Meenakshi Amman Temple", "Thirumalai Nayakkar Mahal", "Gandhi Museum"] },
+  chennai: { bestTime: "Nov – Feb", tip: "Visit Marina Beach in the early morning or evening to avoid heat.", attractions: ["Marina Beach", "Kapaleeshwarar Temple", "Fort St. George"] },
+  kolkata: { bestTime: "Oct – Mar", tip: "Visit during Durga Puja (Sep/Oct) for spectacular decorations.", attractions: ["Victoria Memorial", "Howrah Bridge", "Indian Museum"] },
+  darjeeling: { bestTime: "Mar – May, Oct – Dec", tip: "Take the toy train early morning for the best mountain views.", attractions: ["Tiger Hill", "Darjeeling Himalayan Railway", "Tea Gardens"] },
+  gangtok: { bestTime: "Mar – Jun, Oct – Dec", tip: "Carry permits in advance for nearby Nathula Pass excursions.", attractions: ["MG Marg", "Tsomgo Lake", "Rumtek Monastery"] },
+  shillong: { bestTime: "Sep – Apr", tip: "Pack a raincoat — Meghalaya sees rain even outside monsoon.", attractions: ["Umiam Lake", "Elephant Falls", "Living Root Bridges"] },
+};
+
+// ---------------------------------------------------------------------------
 // 2. Distance / geometry helpers
 // ---------------------------------------------------------------------------
 const EARTH_RADIUS_KM = 6371;
@@ -91,17 +127,126 @@ const TRANSPORT_MODES = {
 // ---------------------------------------------------------------------------
 const CACHE_PREFIX = "iie_route_cache_v1:";
 const CACHE_TTL_MS = 1000 * 60 * 60 * 24 * 7; // 7 days
+const MAX_CACHE_ENTRIES = 20;
 
 function buildCacheKey(stopIds, mode) {
   return `${CACHE_PREFIX}${mode}:${stopIds.join(">")}`;
 }
 
+function isQuotaExceededError(err) {
+  return (
+    err &&
+    (err.name === "QuotaExceededError" ||
+      err.name === "NS_ERROR_DOM_QUOTA_REACHED" ||
+      err.code === 22 ||
+      err.code === 1014 ||
+      (err.message && (err.message.includes("quota") || err.message.includes("limit"))))
+  );
+}
+
+function purgeAllRouteCaches() {
+  if (typeof localStorage === "undefined") return;
+  const keysToRemove = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith(CACHE_PREFIX)) {
+      keysToRemove.push(key);
+    }
+  }
+  keysToRemove.forEach((key) => {
+    try {
+      localStorage.removeItem(key);
+    } catch (e) {}
+  });
+}
+
+function sweepExpiredCache() {
+  if (typeof localStorage === "undefined") return;
+  const keysToRemove = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith(CACHE_PREFIX)) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (raw) {
+          const entry = JSON.parse(raw);
+          if (Date.now() - entry.savedAt > CACHE_TTL_MS) {
+            keysToRemove.push(key);
+          }
+        }
+      } catch (err) {
+        keysToRemove.push(key);
+      }
+    }
+  }
+  keysToRemove.forEach((key) => {
+    try {
+      localStorage.removeItem(key);
+    } catch (e) {}
+  });
+}
+
+function enforceLimitAndSave(newKey, newEntry) {
+  if (typeof localStorage === "undefined") return;
+
+  const entries = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith(CACHE_PREFIX) && key !== newKey) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          entries.push({
+            key,
+            lastAccessedAt: parsed.lastAccessedAt || parsed.savedAt || 0
+          });
+        }
+      } catch (err) {
+        localStorage.removeItem(key);
+      }
+    }
+  }
+
+  entries.sort((a, b) => a.lastAccessedAt - b.lastAccessedAt);
+
+  while (entries.length >= MAX_CACHE_ENTRIES) {
+    const oldest = entries.shift();
+    if (oldest) {
+      localStorage.removeItem(oldest.key);
+    }
+  }
+
+  try {
+    localStorage.setItem(newKey, JSON.stringify(newEntry));
+  } catch (err) {
+    if (isQuotaExceededError(err)) {
+      purgeAllRouteCaches();
+      try {
+        localStorage.setItem(newKey, JSON.stringify(newEntry));
+      } catch (retryErr) {
+        // Ignore
+      }
+    }
+  }
+}
+
 function readCache(stopIds, mode) {
   try {
-    const raw = localStorage.getItem(buildCacheKey(stopIds, mode));
+    const key = buildCacheKey(stopIds, mode);
+    const raw = localStorage.getItem(key);
     if (!raw) return null;
     const entry = JSON.parse(raw);
-    if (Date.now() - entry.savedAt > CACHE_TTL_MS) return null;
+    if (Date.now() - entry.savedAt > CACHE_TTL_MS) {
+      localStorage.removeItem(key);
+      return null;
+    }
+    entry.lastAccessedAt = Date.now();
+    try {
+      localStorage.setItem(key, JSON.stringify(entry));
+    } catch (err) {
+      // Ignore non-fatal update error
+    }
     return entry.data;
   } catch (err) {
     return null;
@@ -110,9 +255,24 @@ function readCache(stopIds, mode) {
 
 function writeCache(stopIds, mode, data) {
   try {
-    localStorage.setItem(buildCacheKey(stopIds, mode), JSON.stringify({ savedAt: Date.now(), data }));
+    const key = buildCacheKey(stopIds, mode);
+    const entry = {
+      savedAt: Date.now(),
+      lastAccessedAt: Date.now(),
+      data
+    };
+    enforceLimitAndSave(key, entry);
   } catch (err) {
-    // Non-fatal: caching is a perf optimization, not a correctness requirement.
+    // Non-fatal
+  }
+}
+
+// Automatically sweep expired cache keys on script execution if in browser
+if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+  try {
+    sweepExpiredCache();
+  } catch (err) {
+    // Non-fatal
   }
 }
 
@@ -244,6 +404,15 @@ async function getRoute(stops, mode) {
 }
 
 // ---------------------------------------------------------------------------
+// 6b. Recommended transport mode based on trip distance
+// ---------------------------------------------------------------------------
+function recommendMode(distanceKm) {
+  if (distanceKm < 300) return "road";
+  if (distanceKm < 800) return "rail";
+  return "air";
+}
+
+// ---------------------------------------------------------------------------
 // 7. Formatting helpers
 // ---------------------------------------------------------------------------
 function formatDistance(km) {
@@ -261,8 +430,9 @@ function formatDuration(minutes) {
 // <script> pattern already used by app.js / data.js / story-engine.js.
 // ---------------------------------------------------------------------------
 const RoutePlanner = {
-  ROUTE_DESTINATIONS, TRANSPORT_MODES, haversineDistanceKm,
+  ROUTE_DESTINATIONS, TRANSPORT_MODES, DESTINATION_INFO, haversineDistanceKm,
   optimizeRoute, tourLengthKm, getRoute, formatDistance, formatDuration, buildCacheKey,
+  recommendMode, sweepExpiredCache, purgeAllRouteCaches, MAX_CACHE_ENTRIES,
 };
 
 if (typeof module !== "undefined" && module.exports) {

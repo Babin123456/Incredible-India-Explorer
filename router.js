@@ -5,6 +5,25 @@
  */
 
 // ==========================================================================
+// 0. EVENT BUS (PUBSUB) FOR CROSS-COMPONENT COMMUNICATION
+// ==========================================================================
+
+window.AppEventBus = new class {
+    constructor() {
+        this.listeners = {};
+    }
+    on(event, callback) {
+        if (!this.listeners[event]) this.listeners[event] = [];
+        this.listeners[event].push(callback);
+    }
+    emit(event, data) {
+        if (this.listeners[event]) {
+            this.listeners[event].forEach(callback => callback(data));
+        }
+    }
+}();
+
+// ==========================================================================
 // 0. LOADING OVERLAY HELPERS (Issue #256)
 // ==========================================================================
 
@@ -456,6 +475,7 @@ class Router {
 
         // Set global access hooks
         window.appLifecycle = this.lifecycle;
+        window.appRouter = this;
 
         injectTransitionStyles();
         this.init();
@@ -613,7 +633,12 @@ class Router {
                     window.scrollTo(0, 0);
                 }
 
-                this.dispatchRouteEvent();
+                if (typeof this.dispatchRouteEvent === 'function') {
+                    this.dispatchRouteEvent();
+                }
+                
+                // Publish route change to EventBus
+                window.AppEventBus.emit('page:changed', { path: path });
 
                 // Update SEO Metadata and JSON-LD Structured Data dynamically
                 if (window.seoHelper && typeof window.seoHelper.update === 'function') {

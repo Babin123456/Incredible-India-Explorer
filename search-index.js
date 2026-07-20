@@ -718,5 +718,49 @@ window.indiaSearchIndex = [
     category: "Nature & Wildlife",
     description: "Discover the diverse butterfly species found across India's varied ecological zones.",
     url: "butterfly.html"
+  },
+  // --- National Parks ---
+  {
+    title: "National Parks of India",
+    category: "Nature & Wildlife",
+    description: "Search and filter Indian national parks like Jim Corbett, Kaziranga, Ranthambore, and Gir by region and fauna.",
+    url: "wildlife.html"
+  },
+  // --- Bridges ---
+  {
+    title: "Indian Bridges Explorer",
+    category: "Infrastructure & Heritage",
+    description: "Discover famous engineering marvels, cable-stayed sea links, arch rail bridges, and living root bridges across India.",
+    url: "bridges.html"
+  },
+  {
+    title: "Howrah Bridge (Rabindra Setu)",
+    category: "Bridges",
+    description: "Iconic cantilever steel bridge over the Hooghly River in Kolkata, built without nuts or bolts.",
+    url: "bridges.html?bridge=howrah-bridge"
+  },
+  {
+    title: "Chenab Rail Bridge",
+    category: "Bridges",
+    description: "The world's highest railway bridge at 359m above the riverbed in Jammu and Kashmir.",
+    url: "bridges.html?bridge=chenab-bridge"
+  // --- Folk Tales ---
+  {
+    title: "Indian Folk Tales Explorer",
+    category: "Culture & Literature",
+    description: "Explore 30+ regional folk tales, legends, Panchatantra fables, and oral traditions from different states of India.",
+    url: "folk-tales.html"
+  },
+  {
+    title: "Birbal's Khichdi (Uttar Pradesh Folk Tale)",
+    category: "Folk Tales",
+    description: "Birbal uses a slow-cooking pot above a small flame to teach Akbar a gentle lesson about warmth and hope.",
+    url: "folk-tales.html?story=birbal-khichdi"
+  },
+  {
+    title: "Tenali Raman & Golden Brinjal (Andhra Pradesh Folk Tale)",
+    category: "Folk Tales",
+    description: "Tenali Raman outmarts court jester gossip to share royal garden brinjals with his family.",
+    url: "folk-tales.html?story=tenali-brinjal"
   }
 ];

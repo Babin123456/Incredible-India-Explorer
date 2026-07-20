@@ -102,6 +102,13 @@
                             <p class="gold" id="stat-festival"></p>
                         </div>
                     </div>
+                    <div class="stat-card glass-card animate-fade-in-delayed-2">
+                        <div class="stat-icon">🗓️</div>
+                        <div class="stat-content">
+                            <h3>Best Time to Visit</h3>
+                            <p class="gold" id="stat-best-time"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -122,6 +129,18 @@
                     <div class="state-map-overlay">
                         <button class="btn btn-primary" id="btn-full-story">🔍 View Full Story</button>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="state-attractions-section fade-in-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-badge">Must-Visit Places</span>
+                    <h2 id="attractions-section-title">Top Attractions</h2>
+                    <p class="section-subtitle" id="attractions-section-subtitle">Popular tourist spots and landmarks worth exploring.</p>
+                </div>
+                <div class="state-attractions-list" id="state-attractions-list">
                 </div>
             </div>
         </section>
@@ -314,9 +333,10 @@
             var festival = loc.festival;
             var description = loc.description;
             var story = loc.story || description;
-            var pathData = loc.path || '';
+var pathData = loc.path || '';
             var videoUrl = heroVideos[stateId] || '';
-
+            var bestTimeToVisit = loc.bestTimeToVisit || 'Year-round';
+            var attractions = loc.attractions || [];
             // --- Populate page metadata ---
             document.getElementById('meta-description').setAttribute('content', description);
             document.getElementById('page-title').textContent = name + ' | Incredible India';
@@ -329,11 +349,10 @@
             document.getElementById('state-name-heading').textContent = name;
             document.getElementById('state-description').textContent = description;
 
-            // --- Populate stats ---
+// --- Populate stats ---
             document.getElementById('stat-capital').textContent = capital;
             document.getElementById('stat-food').textContent = food;
             document.getElementById('stat-festival').textContent = festival;
-
             // --- Populate map section ---
             document.getElementById('map-section-title').textContent = 'Explore ' + name + ' on Map';
             document.getElementById('map-section-subtitle').textContent =

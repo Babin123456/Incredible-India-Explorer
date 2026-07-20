@@ -7,6 +7,9 @@
   <meta name="description" content="A beginner-friendly glossary of Indian culture, history, geography, architecture, music, nature, food, and literature terms.">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="glossary.css">
+  <link rel="stylesheet" href="keyboard-shortcuts.css">
+  <link rel="stylesheet" href="smart-empty-state.css">
+  <link rel="stylesheet" href="card-deeplink.css">
 </head>
 <body>
   <header class="navbar scrolled" id="navbar">
@@ -57,7 +60,7 @@
           </div>
           <div class="control-field">
             <label for="category-filter">Category</label>
-            <select id="category-filter"><option value="all">All categories</option></select>
+             <select id="category-filter" aria-label="Select category filter"><option value="all">All categories</option></select>
           </div>
         </div>
 
@@ -99,5 +102,8 @@
   <button id="btn-scroll-top" class="btn-scroll-top" aria-label="Scroll to top">↑</button>
   <script src="app.js"></script>
   <script src="glossary.js"></script>
+  <script src="keyboard-shortcuts.js"></script>
+  <script src="smart-empty-state.js"></script>
+  <script src="card-deeplink.js"></script>
 </body>
 </html>
