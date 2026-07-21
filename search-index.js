@@ -807,6 +807,24 @@ window.indiaSearchIndex = [
     description: "Historic first soft landing near the Moon's South Pole at Shiv Shakti Point by Vikram lander and Pragyan rover.",
     url: "space.html?item=chandrayaan-3"
   },
+  // --- Ancient Trade Routes ---
+  {
+    title: "Ancient Indian Trade Network",
+    category: "Heritage & History",
+    description: "Interactive visualizer of ancient land and maritime routes like the Silk Road and Spice Route connecting India with Rome, Arabia, and China.",
+    url: "trade-routes.html"
+  },
+  {
+    title: "Muziris Spice Port",
+    category: "Ancient Trade Ports",
+    description: "Ancient Malabar port trading black pepper with Rome, Egypt, and the Mediterranean.",
+    url: "trade-routes.html?port=muziris"
+  },
+  {
+    title: "Lothal Harappan Port",
+    category: "Ancient Trade Ports",
+    description: "Oldest known artificial tidal dockyard in the world from the Indus Valley Civilisation.",
+    url: "trade-routes.html?port=lothal"
   // --- Cultural DNA ---
   {
     title: "Indian Cultural DNA Explorer",
