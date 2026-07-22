@@ -893,6 +893,24 @@ window.indiaSearchIndex = [
     description: "Compare historical and present-day images of India's iconic heritage sites with an interactive before/after slider.",
     url: "then-vs-now.html"
   },
+  // --- National Parks Timeline ---
+  {
+    title: "India's National Parks Timeline",
+    category: "Nature & Wildlife",
+    description: "Interactive visual timeline showing when India's national parks and wildlife sanctuaries were established.",
+    url: "national-parks-timeline.html"
+  },
+  {
+    title: "Jim Corbett National Park Timeline",
+    category: "National Parks Timeline",
+    description: "Established in 1936 as Hailey National Park, India's oldest protected area.",
+    url: "national-parks-timeline.html?search=Corbett"
+  },
+  {
+    title: "Kaziranga National Park Timeline",
+    category: "National Parks Timeline",
+    description: "Formally established as a national park in 1974, home to the one-horned rhinoceros.",
+    url: "national-parks-timeline.html?search=Kaziranga"
   // --- Indian Climate Zones Explorer ---
   {
     title: "Indian Climate Zones Explorer",
