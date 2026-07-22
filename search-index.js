@@ -856,6 +856,12 @@ window.indiaSearchIndex = [
     description: "Trace how South Indian stone architecture hosted classical Carnatic vocals, geometry of Bharatanatyam, and textile weaving patterns.",
     url: "cultural-dna.html?preset=templearts"
   },
+  // --- Photography Locations Explorer ---
+  {
+    title: "Photography Locations Explorer",
+    category: "Travel & Exploration",
+    description: "Discover India's best photography spots — sunrise viewpoints, golden hour destinations, and seasonal landscape locations.",
+    url: "photography-locations.html"
   // --- Heritage Threat Monitor ---
   {
     title: "Heritage Threat Monitor",
