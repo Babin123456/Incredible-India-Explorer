@@ -886,5 +886,18 @@ window.indiaSearchIndex = [
     category: "Heritage & History",
     description: "Compare historical and present-day images of India's iconic heritage sites with an interactive before/after slider.",
     url: "then-vs-now.html"
+  },
+  // --- State Achievement Timeline ---
+  {
+    title: "State Achievement Timeline",
+    category: "Data & Statistics",
+    description: "Interactive timeline highlighting landmark achievements of Indian states across sports, science, education, economy, literature, technology, and environmental conservation.",
+    url: "state-achievements.html"
+  },
+  {
+    title: "State Milestones & Innovation Highlights",
+    category: "State Achievement Timeline",
+    description: "Discover historical and modern breakthrough milestones across all Indian states.",
+    url: "state-achievements.html"
   }
 ];
