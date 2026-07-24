@@ -12,7 +12,7 @@ import {
   findStoryByStates,
   getUniqueRegions,
   getUniqueBorderStates
-} from '../../border-stories.js';
+} from '../../frontend/border-stories/border-stories.js';
 
 const REQUIRED_STORY_FIELDS = [
   'id',

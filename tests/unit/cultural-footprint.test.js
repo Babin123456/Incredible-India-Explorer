@@ -15,7 +15,7 @@ import {
   findStateById,
   getUniqueDomains,
   getUniqueRegions
-} from '../../cultural-footprint.js';
+} from '../../frontend/cultural-footprint/cultural-footprint.js';
 
 const REQUIRED_STATE_FIELDS = [
   'id',

@@ -14,7 +14,7 @@ import {
   isPlacementCorrect,
   isPuzzleComplete,
   calculateCompletionPercentage
-} from '../../state-jigsaw.js';
+} from '../../frontend/state-jigsaw/state-jigsaw.js';
 
 const REQUIRED_PROFILE_FIELDS = [
   'id',

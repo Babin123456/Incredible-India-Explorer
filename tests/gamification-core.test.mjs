@@ -21,7 +21,7 @@ class MemoryStorage {
 globalThis.window = globalThis.window || {};
 globalThis.window.localStorage = new MemoryStorage();
 
-const gam = await import('../gamification-core.mjs');
+const gam = await import('../js-modules/gamification/gamification-core.mjs');
 
 const tests = [];
 function test(name, fn) { tests.push({ name, fn }); }

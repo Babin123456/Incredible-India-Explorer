@@ -17,7 +17,7 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const moduleCode = readFileSync(resolve(__dirname, '../../travel-timeline.js'), 'utf-8');
+const moduleCode = readFileSync(resolve(__dirname, '../../frontend/travel-timeline/travel-timeline.js'), 'utf-8');
 
 function loadTravelTimeline() {
     // Re-evaluate the module fresh for each test so its internal state

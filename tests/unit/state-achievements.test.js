@@ -14,7 +14,7 @@ import {
   getUniqueCategories,
   toggleBookmark,
   getBookmarkedIds
-} from '../../state-achievements.js';
+} from '../../frontend/state-achievements/state-achievements.js';
 
 const REQUIRED_ACHIEVEMENT_FIELDS = [
   'id',
