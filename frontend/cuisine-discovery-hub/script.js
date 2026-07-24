@@ -78,7 +78,8 @@ function renderDishes() {
   dishGrid.innerHTML = "";
 
   filtered.forEach(dish => {
-    const card = document.createElement("div");
+    const card = document.createElement("button");
+    card.type = "button";
     card.className = "dish-card";
     card.innerHTML = `
       <span class="dish-card-icon">${dish.icon}</span>

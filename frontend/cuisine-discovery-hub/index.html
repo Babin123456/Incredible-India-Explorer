@@ -34,7 +34,7 @@
   <div class="control-bar">
     <div class="search-box">
       <span class="search-icon">🔍</span>
-      <input type="text" id="searchInput" placeholder="Search dishes, ingredients...">
+      <input type="text" id="searchInput" placeholder="Search dishes, ingredients..." aria-label="Search dishes, ingredients">
     </div>
 
     <div class="filter-row">
@@ -69,8 +69,8 @@
 
 <!-- Dish Detail Modal -->
 <div class="dish-modal-overlay" id="dishModalOverlay">
-  <div class="dish-modal">
-    <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
+  <div class="dish-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close dish details">&times;</button>
     <div class="modal-icon" id="modalIcon">🍛</div>
     <span class="modal-region-tag" id="modalRegionTag">Awadh</span>
     <h2 class="modal-title" id="modalTitle">Dish Name</h2>
