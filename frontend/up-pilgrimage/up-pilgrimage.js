@@ -811,6 +811,9 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
           starBtn.classList.toggle("active", newStatus);
           starBtn.textContent = newStatus ? "★" : "☆";
           renderDestinationCard(activeSelectedDestId);
+          if (isFavoritesOnly) {
+            renderDestinationsGrid();
+          }
         });
 
         // Inspect Map Listener
