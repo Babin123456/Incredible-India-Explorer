@@ -822,6 +822,10 @@ window.indiaSearchIndex = [
     url: "frontend/state-challenge/state-challenge.html?mode=trivia"
   },
   {
+    title: "Evolution of the Indian Constitution",
+    category: "Civics & History",
+    description: "Scroll-driven animated timeline mapping the Constituent Assembly (1946), adoption (1950), and landmark constitutional amendments.",
+    url: "frontend/constitution-timeline/index.html"
     title: "Border Neighbors Quiz",
     category: "Interactive Quizzes",
     description: "Name and select all states sharing a land border with a target Indian state. Earn partial-credit points!",
