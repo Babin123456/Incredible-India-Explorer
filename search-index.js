@@ -983,5 +983,18 @@ window.indiaSearchIndex = [
     category: "Climate Zone",
     description: "Explore the dry, arid conditions of Western Rajasthan and Kutch with extreme temperatures and low rainfall.",
     url: "frontend/climate-zones/climate-zones.html?zone=arid"
+  },
+  // --- Uttar Pradesh District Explorer ---
+  {
+    title: "Uttar Pradesh District Explorer",
+    category: "Geography & State Data",
+    description: "Interactive map and detailed guide for all 75 districts of Uttar Pradesh covering headquarters, attractions, population, ODOP industries, cuisine, and festivals.",
+    url: "frontend/up-district-explorer/up-district-explorer.html"
+  },
+  {
+    title: "UP 75 Districts Interactive Map & Guide",
+    category: "UP State Explorer",
+    description: "Search and filter all 75 UP districts across 18 divisions and 4 geographic regions with SVG map and detail inspector.",
+    url: "frontend/up-district-explorer/up-district-explorer.html"
   }
 ];
