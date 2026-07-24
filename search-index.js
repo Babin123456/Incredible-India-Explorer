@@ -821,6 +821,12 @@ window.indiaSearchIndex = [
     description: "Test your geographic and cultural trivia knowledge of India's states to unlock border crossings.",
     url: "frontend/state-challenge/state-challenge.html?mode=trivia"
   },
+  {
+    title: "Evolution of the Indian Constitution",
+    category: "Civics & History",
+    description: "Scroll-driven animated timeline mapping the Constituent Assembly (1946), adoption (1950), and landmark constitutional amendments.",
+    url: "frontend/constitution-timeline/index.html"
+  },
   // --- Ancient Trade Routes ---
   {
     title: "Ancient Indian Trade Network",
