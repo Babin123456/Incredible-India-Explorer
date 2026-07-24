@@ -826,6 +826,16 @@ window.indiaSearchIndex = [
     category: "Civics & History",
     description: "Scroll-driven animated timeline mapping the Constituent Assembly (1946), adoption (1950), and landmark constitutional amendments.",
     url: "frontend/constitution-timeline/index.html"
+    title: "Border Neighbors Quiz",
+    category: "Interactive Quizzes",
+    description: "Name and select all states sharing a land border with a target Indian state. Earn partial-credit points!",
+    url: "frontend/border-neighbors-quiz/index.html"
+  },
+  {
+    title: "Union Territory Sorter",
+    category: "Interactive Games",
+    description: "Drag or tap to categorize all 28 States and 8 Union Territories into their correct bins with instant feedback.",
+    url: "frontend/union-territory-sorter/index.html"
   },
   // --- Ancient Trade Routes ---
   {
