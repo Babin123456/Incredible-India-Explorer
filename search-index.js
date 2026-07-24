@@ -996,5 +996,17 @@ window.indiaSearchIndex = [
     category: "UP Filming Locations",
     description: "Discover movie cards, behind-the-scenes trivia, and interactive gallery for movies filmed in Uttar Pradesh.",
     url: "frontend/up-filming/up-filming.html"
+  // --- Uttar Pradesh Pilgrimage Circuit Planner ---
+  {
+    title: "Uttar Pradesh Pilgrimage Circuit Planner",
+    category: "Pilgrimage & Travel",
+    description: "Plan sacred religious journeys across Uttar Pradesh visiting Ayodhya, Varanasi, Mathura, Vrindavan, Prayagraj, Chitrakoot, Kushinagar, and Sarnath.",
+    url: "frontend/up-pilgrimage/up-pilgrimage.html"
+  },
+  {
+    title: "Ayodhya & Varanasi Sacred Yatra Planner",
+    category: "UP Pilgrimage Circuit",
+    description: "Explore the Ramayana, Krishna, and Buddhist circuits with interactive map, distance calculator, and duration estimation.",
+    url: "frontend/up-pilgrimage/up-pilgrimage.html"
   }
 ];
