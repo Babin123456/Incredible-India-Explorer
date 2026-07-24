@@ -821,6 +821,12 @@ window.indiaSearchIndex = [
     description: "Test your geographic and cultural trivia knowledge of India's states to unlock border crossings.",
     url: "frontend/state-challenge/state-challenge.html?mode=trivia"
   },
+  {
+    title: "Border Neighbors Quiz",
+    category: "Interactive Quizzes",
+    description: "Name and select all states sharing a land border with a target Indian state. Earn partial-credit points!",
+    url: "frontend/border-neighbors-quiz/index.html"
+  },
   // --- Ancient Trade Routes ---
   {
     title: "Ancient Indian Trade Network",
